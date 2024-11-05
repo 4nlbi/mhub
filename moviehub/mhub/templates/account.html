@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %} <!-- Add this line -->
+{% block body %}
+ <div class="main_account clearfix">
+    <section id="center">
+        <img src="{% static 'img/addmov.jpg' %}" alt="Avatar" class="banner-image">
+     <div class="container-xl">
+  <div class="row center_o1">
+   <div class="col-md-12">
+      <h2 class="text-white">Account</h2>
+   </div>
+  </div>
+ </div>
+  </section>
+ </div>
+
+
+<section id="account" class="p_3">
+    <div class="container-xl">
+        <div class="row account_1">
+            <!-- Left Side - Registration Form -->
+            <div class="col-md-6">
+                <div class="account_1l">
+                    <h2>Start Your Membership</h2>
+                    <div class="container">
+                        <h2>Register</h2>
+                        <form action="{% url 'account' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" name="username" placeholder="User Name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" class="form-control" name="conform_password" placeholder="Reenter your Password" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Done</button>
+                            </div>
+                        </form>
+                        {% for msg in messages %}
+                            <div class="alert alert-info mt-3">{{ msg }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Image Section -->
+            <div class="col-md-6">
+                <div class="account_1r">
+                    <div class="grid clearfix">
+                        <figure class="effect-jazz mb-0">
+                            <a href="#">
+                                <img src="{% static 'img/mov3.jpg' %}" class="w-100" alt="Membership Image">
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--fotter-->
+<section id="footer" class="p_3 bg_dark">
+	<div class="row footer_2 mt-4 pt-4">
+		<div class="col-md-4">
+			<div class="footer_2i">
+				<h5 class="text-white">Questions? Call 0850-380-6444</h5>
+				<p class="text-muted mt-3">Format for custom post types that are not book or you can use else if to specify a second post type the same way as above.</p>
+				<select name="categories" class="form-select mt-4 bg-transparent w-50 rounded-0 fw-bold" required="">
+					<option value="">English</option>
+					<option>French</option>
+					<option>Hindi</option>
+					<option>American</option>
+					<option>German</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="footer_2i">
+				<h5 class="text-uppercase col_red mb-3">Play Show</h5>
+				<ul class="mb-0 row">
+					<li class="col-md-12 col-6 p-0"><a class="text-muted" href="#">Play Show</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Devices</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Tips</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Contact</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Legal Notices</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Our Terms</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="footer_2i">
+				<h5 class="text-uppercase col_red mb-3">SUPPORT</h5>
+				<ul class="mb-0 row">
+					<li class="col-md-12 col-6 p-0"><a class="text-muted" href="#">Help Center</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">FAQ</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Account</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Privacy Policy</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Media Center</a></li>
+					<li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Support</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="footer_2i">
+				<h5 class="text-uppercase col_red mb-3">Newsletter</h5>
+				<p class="text-muted mt-3">Format for custom post types that are not book or you can use else if to specify a second post type the same way as above.</p>
+				<input class="form-control mt-3 bg-transparent rounded-0" placeholder="Enter Your Email" type="text">
+				<h6 class="mb-0 text-uppercase mt-4"><a class="button" href="#"><i class="fa fa-location-arrow me-1"></i> SUBMIT NOW</a></h6>
+			</div>
+		</div>
+	</div>
+</section>
+
+	<section id="footer_b">
+		<div class="container-xl">
+			<div class="row footer_b1 text-center">
+				<div class="col-md-12">
+					<p class="mb-0 text-muted">© 2024 MOVIE HUB. All Rights Reserved | Design by <a class="col_red" href=" http://www.templateonweb.com">TemplateOnWeb</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<!--footer end-->
+	<script>
+	window.onscroll = function() {myFunction()};
+
+	var navbar_sticky = document.getElementById("navbar_sticky");
+	var sticky = navbar_sticky.offsetTop;
+	var navbar_height = document.querySelector('.navbar').offsetHeight;
+
+	function myFunction() {
+	  if (window.pageYOffset >= sticky + navbar_height) {
+		navbar_sticky.classList.add("sticky")
+		document.body.style.paddingTop = navbar_height + 'px';
+	  } else {
+		navbar_sticky.classList.remove("sticky");
+		document.body.style.paddingTop = '0'
+	  }
+	}
+	</script>
+{% endblock %}

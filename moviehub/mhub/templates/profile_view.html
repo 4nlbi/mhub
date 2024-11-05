@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Main container */
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Profile Picture */
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        /* Username and bio section */
+        .username {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .bio, .location {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background-color: #3897f0; /* Instagram-like blue */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2a7fc0;
+        }
+
+        /* Profile details */
+        .profile-details {
+            margin-top: 20px;
+            color: #444;
+        }
+
+        /* Section spacing */
+        .section {
+            margin-top: 15px;
+        }
+
+        /* Movies section */
+        .movies-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .movie-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .movie-title {
+            font-weight: bold;
+        }
+
+        .movie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background-color: #ff4d4d; /* Red color for delete */
+        }
+
+        .delete-btn:hover {
+            background-color: #ff1a1a; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    {% if user.profile.profile_picture %}
+        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+    {% else %}
+        <img src="https://via.placeholder.com/120" alt="Default Profile Picture" class="profile-picture">
+    {% endif %}
+
+    <div class="username">{{ user.username }}</div>
+
+    <div class="profile-details">
+        <div class="bio section">{{ user.profile.bio }}</div>
+        <div class="location section"><i class="fas fa-map-marker-alt"></i> {{ user.profile.location }}</div>
+        <div class="section"><strong>Email:</strong> {{ user.email }}</div>
+    </div>
+
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+
+    <!-- Back to Home Button -->
+    <a href="/" class="btn">Back to Home</a> <!-- Adjust the URL to your home page if necessary -->
+
+   <div class="movies-section">
+       <h3>Your Movies</h3>
+       {% for movie in user.movie_set.all %}
+       <div class="movie-item">
+           <div class="movie-title">{{ movie.name }}</div>
+           <div class="movie-buttons">
+               <a href="{% url 'edit_movie' movie.id %}" class="btn">Edit</a>
+               <form action="{% url 'delete_movie' movie.id %}" method="post" style="display:inline;">
+                   {% csrf_token %}
+                   <button type="submit" class="btn delete-btn">Delete</button>
+               </form>
+           </div>
+       </div>
+       {% empty %}
+       <div class="section">You have not added any movies yet.</div>
+       {% endfor %}
+   </div>
+</div>
+
+</body>
+</html>

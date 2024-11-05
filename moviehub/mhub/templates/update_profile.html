@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Update Profile</h2>
+
+    <div class="profile-header">
+        {% if user_profile.profile_picture %}
+            <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+        {% else %}
+            <img src="{% static 'default_profile_pic.png' %}" alt="Default Profile Picture" class="profile-picture">
+        {% endif %}
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- This will render the form fields -->
+        <button type="submit" class="update-button">Update Profile</button>
+    </form>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .profile-container {
+        max-width: 600px;
+        margin: auto;
+        text-align: center;
+    }
+    .profile-header {
+        margin-bottom: 20px;
+    }
+    .profile-picture {
+        width: 100px;  /* Adjust size as needed */
+        height: 100px; /* Adjust size as needed */
+        border-radius: 50%; /* Make it circular */
+    }
+    .update-button {
+        background-color: #007BFF; /* Bootstrap primary color */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px; /* Space above the button */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+    .update-button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+    }
+</style>
+{% endblock %}

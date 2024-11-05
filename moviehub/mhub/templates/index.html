@@ -1,0 +1,214 @@
+
+{% extends 'base.html' %}
+{% load static %} <!-- Add this line -->
+{% block body %}
+<!-- NAVBAR END -->
+
+<div class="main_account clearfix">
+    <section id="center">
+        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'img/addmov.jpg' %}" alt="Slide 1" class="banner-image d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/animation.jpeg' %}" alt="Slide 2" class="banner-image d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/beautynbeast.jpg' %}" alt="Slide 3" class="banner-image d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/BLACK POINERR.jpg' %}" alt="Slide 3" class="banner-image d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'img/horrer.jpg' %}" alt="Slide 3" class="banner-image d-block w-100">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+</div>
+
+
+<!-- Include other sections and make sure to update image paths accordingly -->
+<!--ONLINE STREAM-->
+
+<section id="stream" class="p_3">
+    <div class="container-xl">
+        <div class="row stream_1">
+            <div class="col-md-12">
+                <h1 class="mb-0">Watch Shows Online</h1>
+            </div>
+        </div>
+
+        <!-- First row for movies -->
+        <div class="row stream_2 mt-6 clearfix">
+            {% for movie in movies %}
+                {% if forloop.counter > 8 %}
+
+                {% endif %}
+
+                <div class="col-md-3 pe-0 mb-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="{{ movie.image.url }}" class="w-100" alt="{{ movie.name }}">
+                            </div>
+                            <div class="flip-card-back p-3">
+                                <h6 class="font_16 col_red">{{ movie.category.name }}</h6>
+                                <h4 class="text-Black">{{ movie.name }}</h4>
+                                <p>{{ movie.description }}</p>
+                                <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
+                                <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                                <h5 class="text-Black">
+                                    <a class="text-Black align-middle lh-1" href="{{ movie.youtube_trailer_link }}" target="_blank">
+                                        <i class="fa fa-play-circle"></i> Watch Trailer
+                                    </a>
+                                </h5>
+
+                                <!-- Review Section -->
+                                <div class="review-section">
+                                    <form method="post" action="{% url 'add_review' movie.id %}">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                                    </form>
+                                    <a href="{% url 'movie_detail' movie.id %}" class="btn btn-primary mt-2">View Review</a>
+                                    {% for review in movie.reviews.all %}
+                                    <div class="review">
+                                        <div class="star-rating">
+                                            <p><strong>{{ review.user.username }}</strong>
+                                            {% for i in "12345"|slice:":review.rating"|make_list %}
+                                                <i class="fas fa-star text-warning"></i>
+                                            {% endfor %}
+                                            {% for i in "12345"|slice:":5-review.rating"|make_list %}
+                                                <i class="far fa-star"></i>
+                                            {% endfor %}
+                                            </p>
+                                        </div>
+                                        <p>{{ review.comment }}</p>
+                                        <small>{{ review.created_at }}</small>
+                                    </div>
+                                    {% empty %}
+                                        <p>No reviews yet. Be the first to review!</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start a new row after every 4 movies -->
+                {% if forloop.counter|divisibleby:4 and forloop.counter < 8 %}
+                    </div><div class="row stream_2 mt-6 clearfix">
+                {% endif %}
+
+            {% endfor %}
+        </div> <!-- End of row -->
+    </div>
+</section>
+
+
+
+<!-- Footer Section -->
+<section id="footer" class="p_3 bg_dark" style="margin-top: 40px;">
+    <div class="row footer_2 mt-4 pt-4">
+        <div class="col-md-4">
+            <div class="footer_2i">
+                <h5 class="text-white">Questions? Call 0850-380-6444</h5>
+                <p class="text-muted mt-3">Format for custom post types that are not book or you can use else if to specify a second post type the same way as above.</p>
+                <select name="categories" class="form-select mt-4 bg-transparent w-50 rounded-0 fw-bold" required="">
+                    <option value="">English</option>
+                    <option>French</option>
+                    <option>Hindi</option>
+                    <option>American</option>
+                    <option>German</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="footer_2i">
+                <h5 class="text-uppercase col_red mb-3">Play Show</h5>
+                <ul class="mb-0 row">
+                    <li class="col-md-12 col-6 p-0"><a class="text-muted" href="#">Play Show</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Devices</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Tips</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Contact</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Legal Notices</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Our Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="footer_2i">
+                <h5 class="text-uppercase col_red mb-3">SUPPORT</h5>
+                <ul class="mb-0 row">
+                    <li class="col-md-12 col-6 p-0"><a class="text-muted" href="#">Help Center</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">FAQ</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Account</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Privacy Policy</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Media Center</a></li>
+                    <li class="mt-2 col-md-12 col-6 p-0"><a class="text-muted" href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="footer_2i">
+                <h5 class="text-uppercase col_red mb-3">Newsletter</h5>
+                <p class="text-muted mt-3">Format for custom post types that are not book or you can use else if to specify a second post type the same way as above.</p>
+                <input class="form-control mt-3 bg-transparent rounded-0" placeholder="Enter Your Email" type="text">
+                <h6 class="mb-0 text-uppercase mt-4"><a class="button" href="#"><i class="fa fa-location-arrow me-1"></i> SUBMIT NOW</a></h6>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="footer_b">
+    <div class="container-xl">
+        <div class="row footer_b1 text-center">
+            <div class="col-md-12">
+                <p class="mb-0 text-muted">© 2024 MOVIE HUB. All Rights Reserved | Design by <a class="col_red" href="http://www.templateonweb.com">TemplateOnWeb</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--footer end-->
+	<script>
+	window.onscroll = function() {myFunction()};
+
+	var navbar_sticky = document.getElementById("navbar_sticky");
+	var sticky = navbar_sticky.offsetTop;
+	var navbar_height = document.querySelector('.navbar').offsetHeight;
+
+	function myFunction() {
+	  if (window.pageYOffset >= sticky + navbar_height) {
+		navbar_sticky.classList.add("sticky")
+		document.body.style.paddingTop = navbar_height + 'px';
+	  } else {
+		navbar_sticky.classList.remove("sticky");
+		document.body.style.paddingTop = '0'
+	  }
+	}
+	</script>
+  <script>
+    const flipCards = document.querySelectorAll('.flip-card');
+
+    flipCards.forEach((card) => {
+      card.addEventListener('mouseover', () => {
+        card.classList.add('flipped');
+        setTimeout(() => {
+          card.classList.remove('flipped');
+        }, 60000); // 1 minute
+      });
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<style>
+    /* Add your custom styles here */
+    body {
+        background-color: #E6E6FA; /* Light gray background for the entire page */
+    }
+    .form-background {
+        background-color: #E6E6FA; /* White background for the form */
+    }
+
+    .text-Black {
+        color: black; /* Set text color to black */
+        font-size: 2rem; /* Adjust font size */
+        text-align: center; /* Center align the text */
+        margin-top: 20px; /* Add some space above */
+
+</style>
+
+<div class="main_account clearfix">
+    <section id="center">
+        <img src="{% static 'img/addmov.jpg' %}" alt="Avatar" class="banner-image">
+        <div class="container-xl">
+            <div class="row center_o1">
+                <div class="col-md-12">
+                    <h2 class="text-Black">Add Movie</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <form method="post" enctype="multipart/form-data" class="form-background p-4 rounded shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Add Movie</button>
+    </form>
+</div>
+
+
+
+<script>
+    window.onscroll = function() { myFunction() };
+
+    var navbar_sticky = document.getElementById("navbar_sticky");
+    var sticky = navbar_sticky.offsetTop;
+    var navbar_height = document.querySelector('.navbar').offsetHeight;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky + navbar_height) {
+            navbar_sticky.classList.add("sticky");
+            document.body.style.paddingTop = navbar_height + 'px';
+        } else {
+            navbar_sticky.classList.remove("sticky");
+            document.body.style.paddingTop = '0';
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <div class="main_account clearfix">
+        <section id="center">
+            <img src="{% static 'img/addmov.jpg' %}" alt="Avatar" class="banner-image">
+            <div class="container-xl">
+                <div class="row center_o1">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <h1>{{ movie.name }}</h1>
+<img src="{{ movie.image.url }}" alt="{{ movie.title }}" class="img-fluid" style="max-height: 500px; width: auto;">
+
+<p>{{ movie.description }}</p>
+<p><strong>Release Year:</strong> {{ movie.release_year }}</p>
+<p><strong>Actors:</strong> {{ movie.actors }}</p>
+
+<h2>Reviews</h2>
+{% if movie.reviews.all %}
+    {% for review in movie.reviews.all %}
+        <div class="review">
+            <p>{{ review.comment }}</p>
+            <small>{{ review.created_at }}</small>
+
+            <!-- Star Rating Display -->
+            <div class="star-rating">
+                {% for i in "12345"|slice:":review.rating"|make_list %}
+                    <span class="star filled">&#9733;</span>  <!-- Filled star -->
+                {% endfor %}
+                {% for i in "12345"|slice:":5-review.rating"|make_list %}
+                    <span class="star">&#9734;</span>  <!-- Empty star -->
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No reviews yet. Be the first to review!</p>
+{% endif %}
+
+<h3>Add a Review</h3>
+<a href="{% url 'add_review' movie.id %}" class="btn btn-primary">Leave a Review</a>
+<a href="{% url 'index' %}" class="btn btn-secondary mt-3">Back to Home </a>
+{% endblock %}

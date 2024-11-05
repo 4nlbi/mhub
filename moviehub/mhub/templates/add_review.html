@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+   <div class="main_account clearfix">
+        <section id="center">
+            <img src="{% static 'img/addmov.jpg' %}" alt="Avatar" class="banner-image">
+            <div class="container-xl">
+                <div class="row center_o1">
+                </div>
+            </div>
+        </section>
+    </div>
+<div class="container">
+    <img src="{{ movie.image.url }}"height="200" width="300" alt="{{ movie.title }}" class="img-fluid mb-4">
+
+
+    <form method="post" action="{% url 'add_review' movie.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Ensure form fields are displayed correctly -->
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-3">Back </a>
+</div>
+{% endblock %}
